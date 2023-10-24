@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# Backup files
+*.bak
+
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +33,28 @@
 *.exe
 *.out
 *.app
+
+# Protobuf-generated files
+*.pb.h
+*.pb.cc
+
+# OS X folder attributes
+.DS_Store 
+
+# Compressed files
+*.gz
+
+# Vscode
+.vscode/
+
+*.iml
+
+# Vim
+.*.swp
+*.swp
+.*.swo
+*.swo
+tags
+tags.lock
+tags.temp
+*.vim
