@@ -2,8 +2,11 @@
 
 #include "absl/debugging/stacktrace.h"
 #include "absl/debugging/symbolize.h"
-#include "utils/logging.h"
+#include "logging.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/sinks/rotating_file_sink.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace tcs {
 
@@ -14,13 +17,13 @@ std::string TcsLog::logger_name_ = "tcs_log_slink";
 long TcsLog::log_rotation_max_size_ = 1 << 29;
 long TcsLog::log_rotation_file_num_ = 10;
 
-std::ostream &operator<<(std::ostream &os, const StackTrace &stack_trace) {
+std::ostream& operator<<(std::ostream& os, const StackTrace& stack_trace) {
   static constexpr int MAX_NUM_FRAMES = 64;
   char buf[16 * 1024];
-  void *frames[MAX_NUM_FRAMES];
+  void* frames[MAX_NUM_FRAMES];
 
   const int num_frames = backtrace(frames, MAX_NUM_FRAMES);
-  char **frame_symbols = backtrace_symbols(frames, num_frames);
+  char** frame_symbols = backtrace_symbols(frames, num_frames);
   for (int i = 0; i < num_frames; ++i) {
     os << frame_symbols[i];
 
@@ -31,6 +34,8 @@ std::ostream &operator<<(std::ostream &os, const StackTrace &stack_trace) {
     os << "\n";
   }
   free(frame_symbols);
+
+  return os;
 }
 
 class DefaultStdErrLogger final {
@@ -155,14 +160,12 @@ bool TcsLog::IsEnabled() const { return is_enabled_; }
 
 bool TcsLog::IsFatal() const { return is_fatal_; }
 
+std::ostream& TcsLog::ExposeStream() { return *expose_osstream_; }
+
 TcsLog::~TcsLog() {
   if (logging_provider_ != nullptr) {
     delete reinterpret_cast<LoggingProvider*>(logging_provider_);
     logging_provider_ = nullptr;
-  }
-  if (expose_osstream_ != nullptr) {
-    delete expose_osstream_;
-    expose_osstream_ = nullptr;
   }
   if (severity_ == TcsLogLevel::FATAL) {
     std::_Exit(EXIT_FAILURE);

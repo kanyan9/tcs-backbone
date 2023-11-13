@@ -1,4 +1,4 @@
-#include "transport/address.h"
+#include "address.h"
 
 namespace tcs {
 
@@ -13,7 +13,7 @@ TcsAddress::TcsAddress(int& value,
   this->type_ = static_cast<AddressType>(value);
 
   for (auto ip : ip_list) {
-    this->address_.push_back(ip + to_string(port));
+    this->address_.push_back(ip + std::to_string(port));
   }
 }
 

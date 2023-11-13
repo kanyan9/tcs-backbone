@@ -93,6 +93,10 @@ class TcsLog : public TcsLogBase {
   
   virtual ~TcsLog();
 
+  virtual bool IsEnabled() const;
+
+  virtual bool IsFatal() const;
+
   static bool IsLevelEnabled(TcsLogLevel log_level_);
 
   static std::string GetLogFormatPattern();
@@ -100,6 +104,8 @@ class TcsLog : public TcsLogBase {
   static std::string GetLoggerName();
 
  private:
+  void* logging_provider_;
+
   bool is_enabled_;
 
   TcsLogLevel severity_;
