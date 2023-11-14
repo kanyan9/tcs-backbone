@@ -2,7 +2,8 @@
 
 if [ $1 == clean ]; then
   rm -rf build/
-else
+
+elif [ $1 == build ]; then
   if [ ! -d "build" ]; then
     mkdir build
   fi
@@ -10,4 +11,6 @@ else
   cd build
   cmake ..
   make
+else
+  echo "please input right compile parameter!"
 fi
