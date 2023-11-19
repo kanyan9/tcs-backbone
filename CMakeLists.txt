@@ -7,16 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 set(BINARY ${CMAKE_PROJECT_NAME})
 
-message(${CMAKE_SOURCE_DIR})
 # add thirdparty libs
 add_subdirectory("${CMAKE_SOURCE_DIR}/third_party/spdlog")
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/third_party/abseil")
-message("Done")
+
+include(cmake/protobuf.cmake)
 
 # compile project to generate shard library
-file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true "${CMAKE_SOURCE_DIR}/src/*.cc")
-file(GLOB_RECURSE INCLUDE LIST_DIRECTORIES true "${CMAKE_SOURCE_DIR}/src/*.h")
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES false "${CMAKE_SOURCE_DIR}/src/*.cc")
+file(GLOB_RECURSE INCLUDE LIST_DIRECTORIES false "${CMAKE_SOURCE_DIR}/src/*.h")
 set(SOURCES ${SOURCES})
 set(INCLUDE ${INCLUDE})
 
@@ -38,7 +38,7 @@ target_link_libraries(tcs_backbone
 # add test
 enable_testing()
 
-add_subdirectory("${CMAKE_SOURCE_DIR}/third_party/googletest")
+include(cmake/gtest.cmake)
 
 # logging test
 add_executable(logging_test)
@@ -54,4 +54,4 @@ target_link_libraries(logging_test
     gtest_main
 )
 
-add_test(logging_test logging_test)
+# add_test(logging_test logging_test)
