@@ -1,12 +1,13 @@
+#include "../utils/logging.h"
 #include "address.h"
 
 namespace tcs {
 
-TcsAddress::TcsAddress(int& value, 
+Address::Address(int& value, 
                        std::vector<std::string>& ip_list,
                        int& port) {
   if (value < 1 || value > NUM_TYPE) {
-    // TODO: output error log!
+    TCS_LOG(ERROR) << "transport ip address error! value is 1 ~ 5"; 
     return;
   }
 
@@ -17,11 +18,11 @@ TcsAddress::TcsAddress(int& value,
   }
 }
 
-AddressType TcsAddress::get_type() {
+AddressType Address::get_type() {
   return this->type_;
 }
 
-std::vector<std::string> TcsAddress::get_address() {
+std::vector<std::string> Address::get_address() {
   return this->address_;
 }
 

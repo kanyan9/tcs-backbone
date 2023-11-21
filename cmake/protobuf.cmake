@@ -1,4 +1,48 @@
+function(protobuf_generate_cpp_with_root SRCS HDRS ROOT_DIR)
+  if(NOT ARGN)
+    message(
+      SEND_ERROR
+        "Error: protobuf_generate_cpp_with_root() called without any proto files")
+    return()
+  endif()
+
+  set(${SRCS})
+  set(${HDRS})
+
+  foreach(FIL ${ARGN})
+    set(ABS_FIL ${ROOT_DIR}/${FIL})
+    get_filename_component(FIL_WE ${FIL} NAME_WE)
+    get_filename_component(FIL_DIR ${ABS_FIL} PATH)
+    file(RELATIVE_PATH REL_DIR ${ROOT_DIR} ${FIL_DIR})
+
+    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/proto")
+    set(PROTO_GENERATE_OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/proto")
+
+    list(APPEND ${SRCS} "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.cc")
+    list(APPEND ${HDRS} "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.h")
+
+    add_custom_command(
+      OUTPUT "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.cc"
+             "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.h"
+      COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ARGS --cpp_out ${PROTO_GENERATE_OUT_DIR}
+              -I ${FIL_DIR} ${ABS_FIL} -I ${PROTOBUF_INCLUDE_DIRS}
+      DEPENDS ${ABS_FIL} libprotobuf
+      COMMENT "Running C++ protocol buffer compiler on ${FIL}"
+      VERBATIM)
+  endforeach()
+
+  set_source_files_properties(${${SRCS}} ${${HDRS}} PROPERTIES GENERATED TRUE)
+  set(${SRCS}
+      ${${SRCS}}
+      PARENT_SCOPE)
+  set(${HDRS}
+      ${${HDRS}}
+      PARENT_SCOPE)
+endfunction()
+
+
 include(ExternalProject)
+include(GNUInstallDirs)
 
 set(PROTOBUF_DIR
     "${PROJECT_SOURCE_DIR}/third_party/protobuf"

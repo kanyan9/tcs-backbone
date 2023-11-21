@@ -1,30 +1,37 @@
 #pragma once
 
 #include "address.h"
+#include "data.h"
+#include "transport_config.h"
 
-// namespace tcs {
+namespace tcs {
 
-// class TcsPacket {
-//  public:
-//   // TODO: use std::move()?
-//   TcsPacket(TcsPacket type, 
-//             TcsAddress& address,
-//             std::string& number,
-//             TcsData& data, 
-//             TransportConfig& config)
-//       : type_(type),
-//         address_(address),
-//         packet_number_(number),
-//         data_(data),
-//         config_(config) {}
+enum class PacketType {
+  SERVICE_P = 1,
+  STATE_P = 2,
+  CONTROL_P = 3
+};
 
-//  private:
-//   int version_ = 1;
-//   TcsPacketType type_;
-//   TcsAddress address_;
-//   std::string packet_number_;
-//   TcsData data_;
-//   TransportConfig config_;
-// };
+class Packet {
+ public:
+  Packet(int& packet_type, 
+         Address& address,
+         std::string& number,
+         Data& data, 
+         TransportConfig& config)
+      : packet_type_(static_cast<PacketType>(packet_type)),
+        address_(address),
+        packet_number_(number),
+        data_(data),
+        config_(config) {}
 
-// } // tcs
+ private:
+  int version_ = 1;
+  PacketType packet_type_;
+  Address address_;
+  std::string packet_number_;
+  Data data_;
+  TransportConfig config_;
+};
+
+} // tcs

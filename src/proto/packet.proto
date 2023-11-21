@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package tcs.transport;
+
+// move ipList
+message Address {
+  // address type
+  int32 AddressType = 1;
+
+  // ip
+  string ip = 2;
+
+  // app id
+  string app_id = 3;
+}
+
+message Data {
+  // data type
+  string type = 1;
+  // data content
+  bytes content = 2;
+}
+
+message TransportConfig {
+  int32 socketType = 1;
+  int32 qos = 2;
+  int32 reTransCount = 3;
+  int32 failCache = 4;
+  int32 priority = 5;
+}
+
+message Packet {
+  // package type
+  int32 type = 1;
+
+  // package id
+  string package_id = 2;
+
+  // data
+  Data td = 3;
+
+  // Config
+  TransportConfig tc = 4;
+
+  // address
+  Address ad = 5;
+}
