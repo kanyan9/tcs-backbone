@@ -3,26 +3,23 @@
 
 namespace tcs {
 
-Address::Address(int& value, 
-                       std::vector<std::string>& ip_list,
+TcsAddress::TcsAddress(int& value, 
+                       std::string& ip,
                        int& port) {
   if (value < 1 || value > NUM_TYPE) {
-    TCS_LOG(ERROR) << "transport ip address error! value is 1 ~ 5"; 
+    TCS_LOG(ERROR) << "transport ip type error! value is 1 ~ 5"; 
     return;
   }
 
-  this->type_ = static_cast<AddressType>(value);
-
-  for (auto ip : ip_list) {
-    this->address_.push_back(ip + std::to_string(port));
-  }
+  this->type_ = static_cast<TcsAddressType>(value);
+  this->address_ = ip + std::to_string(port);
 }
 
-AddressType Address::get_type() {
+TcsAddressType TcsAddress::get_type() {
   return this->type_;
 }
 
-std::vector<std::string> Address::get_address() {
+std::string TcsAddress::get_address() {
   return this->address_;
 }
 

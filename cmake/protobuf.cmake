@@ -15,8 +15,8 @@ function(protobuf_generate_cpp_with_root SRCS HDRS ROOT_DIR)
     get_filename_component(FIL_DIR ${ABS_FIL} PATH)
     file(RELATIVE_PATH REL_DIR ${ROOT_DIR} ${FIL_DIR})
 
-    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/proto")
-    set(PROTO_GENERATE_OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/proto")
+    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/protobuf")
+    set(PROTO_GENERATE_OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/protobuf")
 
     list(APPEND ${SRCS} "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.cc")
     list(APPEND ${HDRS} "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.h")
@@ -24,7 +24,8 @@ function(protobuf_generate_cpp_with_root SRCS HDRS ROOT_DIR)
     add_custom_command(
       OUTPUT "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.cc"
              "${PROTO_GENERATE_OUT_DIR}/${FIL_WE}.pb.h"
-      COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ARGS --cpp_out ${PROTO_GENERATE_OUT_DIR}
+      COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ARGS --cpp_out
+              ${PROTO_GENERATE_OUT_DIR}
               -I ${FIL_DIR} ${ABS_FIL} -I ${PROTOBUF_INCLUDE_DIRS}
       DEPENDS ${ABS_FIL} libprotobuf
       COMMENT "Running C++ protocol buffer compiler on ${FIL}"

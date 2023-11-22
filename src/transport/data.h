@@ -1,27 +1,29 @@
 #pragma once
 
-#include <vector>
+#include <string>
 
 namespace tcs {
 
-enum class DataType {
+enum class TcsDataType {
   // add data type to meet business transmission data requirement
   FOE = 1,
   MISSIONPACKAGE = 2
 };
 
-class Data {
+class TcsData {
  public:
-  Data(int& value, int& length, unsigned char* content);
+  TcsData(int& value, int& length, std::string& content);
 
-  DataType get_type();
+  TcsDataType get_type();
 
-  std::vector<unsigned char> get_content();
+  std::string get_content();
+
+  int get_len();
 
  private:
-  DataType data_type_;
+  TcsDataType data_type_;
   int length_;
-  std::vector<unsigned char> content_;
+  std::string content_;
 };
 
 } // namespace tcs

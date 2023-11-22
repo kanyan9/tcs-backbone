@@ -5,7 +5,7 @@
 
 namespace tcs {
 
-enum class AddressType {
+enum class TcsAddressType {
   UNICAST_IP = 1,
   MULTICAST_IPS = 2,
   MULTICAST_GROUP_IP = 3,
@@ -15,19 +15,19 @@ enum class AddressType {
 
 const int NUM_TYPE = 5;
 
-class Address {
+class TcsAddress {
  public:
-  Address(int& value, std::vector<std::string>& ip_list, int& port);
+  TcsAddress(int& value, std::string& ip, int& port);
   
   // void set_type(int value);
   // void set_ip(std::vector<std::string>& iplist);
   // void set_port(int port);
-  AddressType get_type();
-  std::vector<std::string> get_address();
+  TcsAddressType get_type();
+  std::string get_address();
 
  private:
-  AddressType type_;
-  std::vector<std::string> address_;
+  TcsAddressType type_;
+  std::string address_;
   
 };
 

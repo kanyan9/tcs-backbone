@@ -10,3 +10,6 @@
 [submodule "third_party/protobuf"]
 	path = third_party/protobuf
 	url = https://github.com/protocolbuffers/protobuf.git
+[submodule "third_party/handy"]
+	path = third_party/handy
+	url = https://github.com/yedf2/handy.git

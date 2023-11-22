@@ -2,7 +2,7 @@
 
 namespace tcs {
 
-enum class Priority {
+enum class TcsPriority {
   P1 = 1,
   P2 = 2,
   P3 = 3,
@@ -11,30 +11,33 @@ enum class Priority {
   P6 = 6
 };
 
-enum class SocketType {
+enum class TcsSocketType {
   UDP = 1,
   TCP = 2,
   UDT = 3,
   KCP = 4
 };
 
-class TransportConfig {
+class TcsTransportConfig {
  public:
-  TransportConfig() {}
+  TcsTransportConfig() {}
 
-  TransportConfig(int& socket_type,
+  TcsTransportConfig(int& socket_type,
                   int& priority,
                   int& qos,
                   int& reTransCount,
                   int& failCache)
-    : socket_type_(static_cast<SocketType>(socket_type)),
-      priority_(static_cast<Priority>(priority)),
+    : socket_type_(static_cast<TcsSocketType>(socket_type)),
+      priority_(static_cast<TcsPriority>(priority)),
       qos_(qos),
       reTransCount_(reTransCount),
       failCache_(failCache) {}
 
-  Priority get_priority();
-  SocketType get_socket_type();
+  TcsSocketType get_socket_type();
+  TcsPriority get_priority();
+  int get_qos();
+  int get_reTransCount();
+  int get_failCache();
 
   void set_priority(int& value);
   void set_socket_type(int& value);
@@ -43,8 +46,8 @@ class TransportConfig {
   void set_failCache(int& value);
 
  private:
-  SocketType socket_type_;
-  Priority priority_;
+  TcsSocketType socket_type_;
+  TcsPriority priority_;
   int qos_;
   int reTransCount_;
   int failCache_;

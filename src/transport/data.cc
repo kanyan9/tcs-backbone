@@ -2,19 +2,21 @@
 
 namespace tcs {
 
-Data::Data(int& value, int& length, unsigned char* content) {
-  data_type_ = static_cast<tcs::DataType>(value);
+TcsData::TcsData(int& value, int& length, std::string& content) {
+  data_type_ = static_cast<tcs::TcsDataType>(value);
   length_ = length;
-  for(int i = 0; i < length; i++) {
-    content_.push_back(content[i]);
-  }
+  content_ = content;
 }
 
-DataType Data::get_type() {
+TcsDataType TcsData::get_type() {
   return data_type_;
 }
 
-std::vector<unsigned char> Data::get_content() {
+int TcsData::get_len() {
+  return length_;
+}
+
+std::string TcsData::get_content() {
   return content_;
 }
 

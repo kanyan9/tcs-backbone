@@ -16,9 +16,11 @@ message Address {
 
 message Data {
   // data type
-  string type = 1;
+  int32 type = 1;
+  // data length
+  int32 length = 2;
   // data content
-  bytes content = 2;
+  bytes content = 3;
 }
 
 message TransportConfig {
@@ -37,11 +39,11 @@ message Packet {
   string package_id = 2;
 
   // data
-  Data td = 3;
+  Data data = 3;
 
   // Config
-  TransportConfig tc = 4;
+  TransportConfig config = 4;
 
   // address
-  Address ad = 5;
+  Address address = 5;
 }
