@@ -28,7 +28,6 @@ class TcsAddress {
  private:
   TcsAddressType type_;
   std::string address_;
-  
 };
 
 } // tcs
