@@ -12,7 +12,15 @@ TcsAddress::TcsAddress(int& value,
   }
 
   this->type_ = static_cast<TcsAddressType>(value);
-  this->address_ = ip + std::to_string(port);
+  this->address_ = ip + ":" + std::to_string(port);
+}
+
+void TcsAddress::set_type(int value) {
+  this->type_ = static_cast<TcsAddressType>(value);
+}
+
+void TcsAddress::set_address(std::string address) {
+  this->address_ = address;
 }
 
 TcsAddressType TcsAddress::get_type() {

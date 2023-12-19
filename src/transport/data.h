@@ -12,17 +12,19 @@ enum class TcsDataType {
 
 class TcsData {
  public:
+  TcsData() {}
   TcsData(int& value, int& length, std::string& content);
 
+  void set_type(int value);
+  void set_contect(std::string content);
   TcsDataType get_type();
-
   std::string get_content();
 
-  int get_len();
+  // int get_len();
 
  private:
   TcsDataType data_type_;
-  int length_;
+  // int length_;
   std::string content_;
 };
 

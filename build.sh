@@ -13,7 +13,7 @@ elif [[ $1 == "release" ]]; then
 elif [[ $1 == "test" ]]; then 
   cd build
   cmake .. -DTCS_WITH_TEST=1
-  make -j 4
+  make -j 4 
 else
   echo "please input right compile parameter!"
 fi

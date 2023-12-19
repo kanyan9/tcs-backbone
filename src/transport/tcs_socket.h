@@ -1,31 +1,35 @@
 #pragma once
 
 #include <string>
-#include "handy.h"
-#include "conn.h"
+
+#include "packet.h"
 
 namespace tcs {
 
-class LocalSocket {
+class TcsSocket {
  public:
-  LocalSocket() {}
+  TcsSocket();
 
-  ~LocalSocket();
+  ~TcsSocket();
 
   void connect();
-  void send(std::string message);
+
+  void send(const char* message);
+  // void send(std::string message);
+  void send(TcsPacket* packet);
+
+  void receive(TcsPacket& packet);
+  
   void close();
 
  private:
-  static unsigned char protocol_flag_;
   static std::string server_ip_;
   static int server_port_;
   static int max_frame_length_;
+  static int reconnect_interval_;
   static std::string app_id;
 
-  handy::TcpConnPtr conn_;
+  void* connect_provider_;
 };
-
-typedef tcs::LocalSocket TcsSocket;
 
 } // namespace tcs

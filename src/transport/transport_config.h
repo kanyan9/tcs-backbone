@@ -39,11 +39,11 @@ class TcsTransportConfig {
   int get_reTransCount();
   int get_failCache();
 
-  void set_priority(int& value);
-  void set_socket_type(int& value);
-  void set_qos(int& value);
-  void set_reTransCount(int& value);
-  void set_failCache(int& value);
+  void set_priority(int value);
+  void set_socket_type(int value);
+  void set_qos(int value);
+  void set_reTransCount(int value);
+  void set_failCache(int value);
 
  private:
   TcsSocketType socket_type_;

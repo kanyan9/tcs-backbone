@@ -4,8 +4,6 @@
 #include "data.h"
 #include "transport_config.h"
 
-#include "packet.pb.h"
-
 namespace tcs {
 
 enum class TcsPacketType {
@@ -16,16 +14,24 @@ enum class TcsPacketType {
 
 class TcsPacket {
  public:
+  TcsPacket() {}
+
   TcsPacket(int& packet_type, 
-         TcsAddress& address,
-         std::string& number,
-         TcsData& data, 
-         TcsTransportConfig& config)
-      : packet_type_(static_cast<TcsPacketType>(packet_type)),
-        address_(address),
-        packet_number_(number),
-        data_(data),
-        config_(config) {}
+            TcsAddress& address,
+            std::string& number,
+            TcsData& data, 
+            TcsTransportConfig& config)
+    : packet_type_(static_cast<TcsPacketType>(packet_type)),
+      address_(address),
+      packet_number_(number),
+      data_(data),
+      config_(config) {}
+
+  void set_packet_type(int value);
+  void set_address(TcsAddress* address);
+  void set_packet_id(std::string number);
+  void set_packet_data(TcsData* data);
+  void set_packet_config(TcsTransportConfig* config);
 
   TcsPacketType get_packet_type();
   TcsAddress get_address();
@@ -42,10 +48,10 @@ class TcsPacket {
   TcsTransportConfig config_;
 };
 
-void serialize(::tcs::TcsPacket& tcs_packet,
-            ::tcs::transport::Packet& packet);
+void serialize(::tcs::TcsPacket* tcs_packet,
+               std::string& proto_message);
 
 void deserialize(::tcs::TcsPacket& tcs_packet,
-            ::tcs::transport::Packet& packet);
+                 std::string& msg);
 
 } // tcs

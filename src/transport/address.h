@@ -17,11 +17,11 @@ const int NUM_TYPE = 5;
 
 class TcsAddress {
  public:
+  TcsAddress() {}
   TcsAddress(int& value, std::string& ip, int& port);
   
-  // void set_type(int value);
-  // void set_ip(std::vector<std::string>& iplist);
-  // void set_port(int port);
+  void set_type(int value);
+  void set_address(std::string address);
   TcsAddressType get_type();
   std::string get_address();
 
